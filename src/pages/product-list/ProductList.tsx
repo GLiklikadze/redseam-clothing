@@ -1,4 +1,4 @@
-import { useGetList } from "../../react-query/query/list/listQuery";
+import { useGetList } from "../../react-query/query/productList/productListQuery";
 import ProductContainer from "./components/ProductContainer";
 import { Product } from "./types";
 
@@ -6,8 +6,8 @@ const ProductList = () => {
   const { data: productListResponse } = useGetList();
   console.log("productListData", productListResponse);
   return (
-    <div className="">
-      <h1 className="mb-8">Products</h1>
+    <div>
+      <h1 className="mb-8 text-[42px] font-semibold">Products</h1>
       <div className="flex gap-x-4 gap-y-8 flex-wrap ">
         {productListResponse?.data?.map((data: Product) => (
           <ProductContainer key={data?.id} data={data} />

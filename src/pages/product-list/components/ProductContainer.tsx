@@ -1,8 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import { Product } from "../types";
 
 const ProductContainer: React.FC<{ data: Product }> = ({ data }) => {
+  const navigate = useNavigate();
+  const onProductClick = () => {
+    console.log("Product clicked:", data.id);
+    navigate(`/products/${data.id}`);
+  };
   return (
-    <div className="w-[412px] h-[614px] basis-1/4">
+    <div onClick={onProductClick} className="w-[412px] h-[614px]">
       <div className="bg-amber-100 h-[549px] w-[412px]">
         <img
           src={data?.cover_image}

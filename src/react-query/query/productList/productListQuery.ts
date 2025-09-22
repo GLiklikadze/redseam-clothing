@@ -1,4 +1,4 @@
-import { getList } from "../../../api/list/list";
+import { getList } from "../../../api/productList/productList";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetList = () => {
