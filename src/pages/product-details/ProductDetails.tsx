@@ -62,9 +62,13 @@ export function ProductDetails() {
               );
             })}
           </div>
-          <div className="w-[704px] h-[907px] rounded-[10px] bg-blue-400">
+          <div className="w-[704px] h-[907px] rounded-[10px]">
             <img
-              src={productDetailsData?.cover_image}
+              src={
+                productDetailsData?.images?.[
+                  productDetailsData?.available_colors?.indexOf(selectedColor)
+                ] ?? " "
+              }
               className="w-full object-cover"
               alt="main-photo"
             />
@@ -84,12 +88,8 @@ export function ProductDetails() {
           {/* Color Selection */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-foreground">
-                Color:
-              </span>
-              <span className="text-sm text-muted-foreground">
-                {selectedColor}
-              </span>
+              <span className="text-base ">Color:</span>
+              <span>{selectedColor}</span>
             </div>
             <ColorSelector
               colors={productDetailsData?.available_colors ?? []}
@@ -160,7 +160,5 @@ export function ProductDetails() {
     </div>
   );
 }
-// </div>;
-// };
 
 export default ProductDetails;

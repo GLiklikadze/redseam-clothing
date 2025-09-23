@@ -21,7 +21,7 @@ export function QuantitySelector({
 
   return (
     <Select value={quantity.toString()} onValueChange={handleQuantityChange}>
-      <SelectTrigger className="w-20 h-10">
+      <SelectTrigger className="w-[70px] h-[42px]">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
