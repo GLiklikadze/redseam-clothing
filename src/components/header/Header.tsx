@@ -4,7 +4,7 @@ import arrow from "../../assets/chevron-down.svg";
 
 const Header = () => {
   return (
-    <div className="flex h-[6.25rem] w-full items-center justify-between bg-gray-100 px-[100px]">
+    <div className="flex h-[6.25rem] w-[1920px] items-center justify-between bg-gray-100 px-[100px]">
       <div className="flex justify-center items-center ">
         <img src={logo} alt="Redseam Clothing Logo" className="h-6 w-6" />
         <h1 className="text-[16px] font-semibold ">Redseam Clothing</h1>

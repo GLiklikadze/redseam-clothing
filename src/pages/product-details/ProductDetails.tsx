@@ -46,7 +46,7 @@ export function ProductDetails() {
   };
   console.log("data", productDetailsData);
   return (
-    <div>
+    <div className="px-[100px]">
       <p className="mt-[30px]">Listing / Product</p>
       <div className="flex flex-row gap-[168px] mt-[49px] pb-[100px]">
         <div className="flex flex-row gap-6">
