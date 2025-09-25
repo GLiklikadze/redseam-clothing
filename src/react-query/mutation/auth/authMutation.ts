@@ -7,7 +7,10 @@ export const useRegister = () => {
   return useMutation({
     mutationKey: ["register"],
     mutationFn: register,
-    onSuccess: () => navigate("/"),
+    onSuccess: (data) => {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/");
+    },
   });
 };
 export const useLogin = () => {

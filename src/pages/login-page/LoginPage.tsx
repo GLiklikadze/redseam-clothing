@@ -1,33 +1,20 @@
 import register_image from "../../assets/register-image.png";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLogin } from "@/react-query/mutation/auth/authMutation";
+import { useNavigate } from "react-router-dom";
+import { LoginFormSchema } from "@/pages/login-page/components/schema";
+import { LoginFormValues } from "@/pages/login-page/components/types";
 
 const initialLoginObj = {
   email: "",
   password: "",
 };
-type LoginFormValues = {
-  email: string;
-  password: string;
-};
 
-export const LoginFormSchema = z.object({
-  email: z
-    .string()
-    .nonempty({ message: "email-required-error" })
-    .email({ message: "email-invalid-pattern" }),
-
-  password: z
-    .string()
-    .nonempty({ message: "password-required-error" })
-    .min(6, { message: "password-minLength-error" })
-    .max(25, { message: "password-maxLength-error" }),
-});
 const LoginPage = () => {
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -74,9 +61,13 @@ const LoginPage = () => {
                 );
               }}
             />
-            {errors.email && <div className="mr-10 mt-2 text-red-700">111</div>}
+            {errors.email && (
+              <div className="mr-10 text-xs mt-2 text-red-700">
+                {errors?.email.message}
+              </div>
+            )}
           </div>
-          <div className="">
+          <div>
             <div className="flex items-center"></div>
             <Controller
               name="password"
@@ -95,7 +86,11 @@ const LoginPage = () => {
                 );
               }}
             />
-            {errors.password && <div className="mr-4  text-red-700">error</div>}
+            {errors.password && (
+              <div className="mr-4 text-xs text-red-700">
+                {errors.password.message}
+              </div>
+            )}
           </div>
           <Button
             type="submit"
@@ -104,7 +99,15 @@ const LoginPage = () => {
           >
             Log in
           </Button>
-          <p className="mx-auto">Not a member ? Register</p>
+          <p className="mx-auto text-sm font-normal">
+            Not a member?{" "}
+            <span
+              onClick={() => navigate("/register")}
+              className="text-sm text-[#FF4000] font-medium cursor-pointer"
+            >
+              Register
+            </span>
+          </p>
         </div>
       </div>
     </div>

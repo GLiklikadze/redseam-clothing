@@ -5,6 +5,7 @@ type httpRegisterProps = {
   email: string;
   password: string;
   confirmPassword: string;
+  avatar: File | null;
 };
 
 type httpLoginProps = {
@@ -17,15 +18,24 @@ export const register = async ({
   email,
   password,
   confirmPassword,
+  avatar,
 }: httpRegisterProps) => {
   try {
-    const { data, status, statusText } = await httpClient.post(`register`, {
-      username: userName,
-      email,
-      password,
-      password_confirmation: confirmPassword,
-      avatar: "",
-    });
+    const { data, status, statusText } = await httpClient.post(
+      `register`,
+      {
+        username: userName,
+        email,
+        password,
+        password_confirmation: confirmPassword,
+        avatar: avatar,
+      },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     if (status !== 200 && status !== 201) {
       throw new Error(`HTTP error! status: ${status} ${statusText}`);
