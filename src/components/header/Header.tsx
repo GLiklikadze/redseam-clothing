@@ -10,7 +10,7 @@ const Header = () => {
   };
   const auth_token = localStorage.getItem("auth_token");
   return (
-    <div className="flex h-[6.25rem] w-[1920px] items-center justify-between bg-gray-100 px-[100px]">
+    <div className="flex h-[6.25rem]  items-center justify-between bg-gray-100 px-[100px]">
       <div
         onClick={onLogoClick}
         className="flex justify-center items-center cursor-pointer"

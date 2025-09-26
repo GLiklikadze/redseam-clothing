@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Product } from "../types";
+import { Product } from "./types";
 
 const ProductContainer: React.FC<{ data: Product }> = ({ data }) => {
   const navigate = useNavigate();

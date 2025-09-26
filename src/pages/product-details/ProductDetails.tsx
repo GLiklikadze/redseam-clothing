@@ -46,7 +46,7 @@ export function ProductDetails() {
   };
   console.log("data", productDetailsData);
   return (
-    <div className="px-[100px]">
+    <div className="bg-[#FFFFFF] px-[100px]">
       <p className="mt-[30px]">Listing / Product</p>
       <div className="flex flex-row gap-[168px] mt-[49px] pb-[100px]">
         <div className="flex flex-row gap-6">
@@ -124,7 +124,7 @@ export function ProductDetails() {
 
           {/* Add to Cart Button */}
           <Button
-            className="w-full bg-[#ff4500] hover:bg-[#e63e00] text-white font-medium py-3 text-base"
+            className="w-full mb-[56px] bg-[#ff4500] hover:bg-[#e63e00] text-white font-medium py-3 text-base"
             size="lg"
             onClick={handleAddToCart}
           >
@@ -133,11 +133,9 @@ export function ProductDetails() {
           </Button>
 
           {/* Product Details */}
-          <div className="space-y-4 pt-6 border-t border-border">
+          <div className="space-y-4 pt-14 border-t border-border">
             <div className="flex flex-row items-center justify-between">
-              <h3 className="text-[20px] font-medium  text-foreground">
-                Details
-              </h3>
+              <h3 className="text-[20px] font-medium ">Details</h3>
               <img
                 src={productDetailsData?.brand?.image}
                 alt="brand-logo"
@@ -146,8 +144,8 @@ export function ProductDetails() {
             </div>
 
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">Brand:</span>{" "}
+              <p className="text-sm">
+                <span className="font-medium ">Brand:</span>{" "}
                 {productDetailsData?.brand?.name}
               </p>
               <p className="text-sm text-muted-foreground overflow break-words whitespace-normal">

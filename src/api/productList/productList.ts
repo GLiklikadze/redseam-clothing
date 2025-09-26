@@ -1,8 +1,10 @@
 import { httpClient } from "..";
 
-export const getList = async () => {
+export const getList = async (page: number) => {
   try {
-    const { data, status, statusText } = await httpClient.get(`products`);
+    const { data, status, statusText } = await httpClient.get(
+      `products/?page=${page}`
+    );
     if (status !== 200 && status !== 201) {
       throw new Error(`HTTP error! status: ${status} ${statusText}`);
     }
