@@ -1,5 +1,5 @@
+import CartSheet from "@/components/cart/CartSheet";
 import logo from "../../assets/HandEye.svg";
-import cart from "../../assets/shopping-cart.svg";
 import arrow from "../../assets/chevron-down.svg";
 import { useNavigate } from "react-router-dom";
 
@@ -13,15 +13,13 @@ const Header = () => {
     <div className="flex h-[6.25rem]  items-center justify-between bg-gray-100 px-[100px]">
       <div
         onClick={onLogoClick}
-        className="flex justify-center items-center cursor-pointer"
+        className="flex justify-center gap-1 items-center cursor-pointer"
       >
         <img src={logo} alt="Redseam Clothing Logo" className="h-6 w-6" />
         <h1 className="text-[16px] font-semibold">Redseam Clothing</h1>
       </div>
       <div className="flex justify-center items-center gap-[20px]">
-        {auth_token && (
-          <img src={cart} alt="cart-logo" className="h-6 w-6 cursor-pointer" />
-        )}
+        <CartSheet />
         <div className="flex justify-center items-center gap-[10px] ">
           {auth_token ? (
             <div className="w-10 h-10">

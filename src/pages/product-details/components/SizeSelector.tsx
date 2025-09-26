@@ -21,7 +21,7 @@ export function SizeSelector({
           variant={selectedSize === size ? "default" : "outline"}
           size="sm"
           onClick={() => onSizeChange(size)}
-          className={`min-w-[3rem] ${
+          className={`w-[70px] h-[42px] text-base font-normal ${
             selectedSize === size
               ? "border-2 border-[#10151F] "
               : "hover:bg-muted"

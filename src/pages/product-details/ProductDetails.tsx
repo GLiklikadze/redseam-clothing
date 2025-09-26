@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ColorSelector } from "@/pages/product-details/components/ColorSelector";
 import { QuantitySelector } from "@/pages/product-details/components/QuantitySelector";
 import { SizeSelector } from "@/pages/product-details/components/SizeSelector";
+import { useAddToCart } from "@/react-query/mutation/productDetails/productDetailsMutation";
 import { useGetProductDetails } from "@/react-query/query/productDetails/productDetailsQuery";
 import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -11,8 +12,10 @@ export function ProductDetails() {
   const { products_id } = useParams();
   const { data: productDetailsData } = useGetProductDetails(products_id ?? "");
 
+  const { mutate: mutateAddToCart } = useAddToCart();
+
   const [selectedSize, setSelectedSize] = useState(
-    productDetailsData?.available_sizes?.[0] ?? ""
+    productDetailsData?.available_colors?.[0] ?? ""
   );
   const [selectedColor, setSelectedColor] = useState(
     productDetailsData?.available_colors?.[0] ?? ""
@@ -31,10 +34,16 @@ export function ProductDetails() {
   useEffect(() => {
     if (productDetailsData) {
       setSelectedColor(productDetailsData.available_colors?.[0] ?? "");
-      setSelectedSize(productDetailsData.size ?? "");
+      setSelectedSize(productDetailsData.available_sizes?.[0] ?? "");
     }
   }, [productDetailsData]);
   const handleAddToCart = () => {
+    mutateAddToCart({
+      product: productDetailsData?.id,
+      quantity: quantity,
+      color: selectedColor,
+      size: selectedSize,
+    });
     console.log(
       { product: productDetailsData?.id },
       {
