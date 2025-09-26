@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/pagination";
 import { useGetList } from "../../react-query/query/productList/productListQuery";
 import ProductContainer from "./components/ProductContainer";
-import { Product } from "./components/types";
+import { FilterAndSortOptions, Product, SortOption } from "./components/types";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import adj_horizontal from "../../assets/adj-horizontal.svg";
@@ -21,15 +21,57 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Controller, useForm } from "react-hook-form";
 
+const initialOptionsObj = {
+  priceFrom: "",
+  priceTo: "",
+};
 const ProductList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = Number(searchParams.get("page")) || 1;
   const [currentPage, setCurrentPage] = useState(pageFromUrl);
-  const { data: productListResponse } = useGetList(currentPage);
+  const [filters, setFilters] = useState<{
+    priceFrom?: string;
+    priceTo?: string;
+  }>({});
+  const [sortBy, setSortBy] = useState<SortOption>("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const { data: productListResponse } = useGetList(
+    currentPage,
+    filters?.priceFrom,
+    filters?.priceTo,
+    sortBy
+  );
+  const { control, handleSubmit } = useForm<FilterAndSortOptions>({
+    defaultValues: initialOptionsObj,
+
+    mode: "onBlur",
+  });
+
+  const handleApplyFilter = (values: FilterAndSortOptions) => {
+    setFilters({
+      priceFrom: values?.priceFrom.toString(),
+      priceTo: values?.priceTo.toString(),
+    });
+    setSearchParams({
+      page: "1",
+      priceFrom: values?.priceFrom.toString(),
+      priceTo: values?.priceTo.toString(),
+    });
+    setCurrentPage(1);
+    setIsFilterOpen(false);
+  };
 
   const totalPages = productListResponse?.meta?.last_page || 1;
-  // const totalProducts = productListResponse?.meta?.total || 0;
+
   const getPageNumbers = () => {
     const pages = [];
     const maxVisiblePages = 4;
@@ -71,30 +113,43 @@ const ProductList = () => {
   };
   const handlePreviousPage = (e: React.MouseEvent) => {
     e.preventDefault();
-    setCurrentPage((prevPage) => (prevPage - 1 > 0 ? prevPage - 1 : 1));
-    setSearchParams({
-      page: currentPage - 1 > 0 ? String(currentPage - 1) : "1",
-    });
+    const newPage = currentPage - 1 > 0 ? currentPage - 1 : 1;
+    setCurrentPage(newPage);
+
+    const params: Record<string, string> = { page: String(newPage) };
+
+    if (filters?.priceFrom) {
+      params.priceFrom = filters.priceFrom;
+    }
+    if (filters?.priceTo) {
+      params.priceTo = filters.priceTo;
+    }
+    setSearchParams(params);
   };
+
   const handleNextPage = (e: React.MouseEvent) => {
     e.preventDefault();
-    setCurrentPage((prevPage) =>
-      prevPage + 1 < totalPages ? prevPage + 1 : totalPages
-    );
-    setSearchParams({
-      page:
-        currentPage + 1 < totalPages
-          ? String(currentPage + 1)
-          : String(totalPages),
-    });
+
+    const newPage = currentPage + 1 < totalPages ? currentPage + 1 : totalPages;
+    setCurrentPage(newPage);
+
+    const params: Record<string, string> = { page: String(newPage) };
+
+    if (filters?.priceFrom) {
+      params.priceFrom = filters.priceFrom;
+    }
+    if (filters?.priceTo) {
+      params.priceTo = filters.priceTo;
+    }
+    setSearchParams(params);
   };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Scroll to top when page changes
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   console.log("productListData", productListResponse);
+
   return (
     <div className="bg-[#FFFFFF] px-[100px]">
       <div className="flex flex-row justify-between items-center">
@@ -105,10 +160,73 @@ const ProductList = () => {
             {productListResponse?.meta?.to} of{" "}
             {productListResponse?.meta?.total} results
           </p>
-          <div className="flex flex-row gap-2">
-            <img src={adj_horizontal} alt="filter-icon" />
-            <div className="text-base font-normal">Filter</div>
-          </div>
+          <div className="flex flex-row gap-2"></div>
+          <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-2 bg-white border-gray-300 hover:bg-gray-100"
+              >
+                <img src={adj_horizontal} alt="filter-icon" />
+                <div className="text-base font-normal">Filter</div>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              className="w-[392px] h-[169px] bg-[FFFFFF] p-0"
+              align="end"
+            >
+              <div className="bg-[#FFFFFF] border-2 border-[#E1DFE1] p-6 rounded-lg">
+                <h3 className="font-medium mb-4 text-gray-900">Select price</h3>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex-1">
+                    <Controller
+                      name="priceFrom"
+                      control={control}
+                      render={({ field: { value, onChange, onBlur } }) => {
+                        return (
+                          <Input
+                            id="priceFrom"
+                            type="number"
+                            value={value}
+                            placeholder="From *"
+                            onChange={onChange}
+                            onBlur={onBlur}
+                          />
+                        );
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <Controller
+                      name="priceTo"
+                      control={control}
+                      render={({ field: { value, onChange, onBlur } }) => {
+                        return (
+                          <Input
+                            id="priceTo"
+                            type="number"
+                            value={value}
+                            placeholder="To *"
+                            onChange={onChange}
+                            onBlur={onBlur}
+                          />
+                        );
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-row-reverse">
+                  <Button
+                    onClick={handleSubmit(handleApplyFilter)}
+                    className="bg-[#FF4000] hover:bg-orange-500 text-[#FFFFFF] font-normal text-sm px-8 py-2 rounded-md"
+                  >
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
           <div className="flex flex-row gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -121,24 +239,39 @@ const ProductList = () => {
                   <img src={arrow_down} alt="arrow-down-icon" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-[223px] h-[184px]">
                 <div className="p-2">
                   <p className="font-medium text-sm mb-2">Sort by</p>
                   <DropdownMenuItem
-                    onClick={() => {}}
-                    // className={sortBy === "newest" ? "bg-accent" : ""}
+                    onClick={() => {
+                      setSortBy("created_at");
+                      setSearchParams({
+                        ...Object.fromEntries(searchParams),
+                        sort: "created_at",
+                      });
+                    }}
                   >
                     New products first
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => {}}
-                    // className={sortBy === "price-low" ? "bg-accent" : ""}
+                    onClick={() => {
+                      setSortBy("price");
+                      setSearchParams({
+                        ...Object.fromEntries(searchParams),
+                        sort: "price",
+                      });
+                    }}
                   >
                     Price, low to high
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => {}}
-                    // className={sortBy === "price-high" ? "bg-accent" : ""}
+                    onClick={() => {
+                      setSortBy("-price");
+                      setSearchParams({
+                        ...Object.fromEntries(searchParams),
+                        sort: "-price",
+                      });
+                    }}
                   >
                     Price, high to low
                   </DropdownMenuItem>
@@ -166,9 +299,18 @@ const ProductList = () => {
                 <PaginationLink
                   onClick={() => {
                     handlePageChange(page as number);
-                    setSearchParams({
-                      page: page as string,
-                    });
+
+                    const params: Record<string, string> = {
+                      page: String(page),
+                    };
+                    if (filters?.priceFrom) {
+                      params.priceFrom = filters.priceFrom;
+                    }
+                    if (filters?.priceTo) {
+                      params.priceTo = filters.priceTo;
+                    }
+
+                    setSearchParams(params);
                   }}
                   isActive={currentPage === page}
                   className="cursor-pointer"

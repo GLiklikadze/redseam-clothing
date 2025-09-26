@@ -28,3 +28,9 @@ export interface ProductsResponse {
   links: Links;
   meta: Meta;
 }
+
+export type FilterAndSortOptions = {
+  priceFrom: number | string;
+  priceTo: number | string;
+};
+export type SortOption = "price" | "created_at" | "-price" | "";
