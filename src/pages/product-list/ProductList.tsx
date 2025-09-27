@@ -54,7 +54,7 @@ const ProductList = () => {
     currentPage,
     filters?.priceFrom,
     filters?.priceTo,
-    sortBy
+    sortBy,
   );
   const { control, handleSubmit } = useForm<FilterAndSortOptions>({
     defaultValues: initialOptionsObj,
@@ -157,7 +157,7 @@ const ProductList = () => {
   console.log("productListData", productListResponse);
 
   return (
-    <div className="bg-[#FFFFFF] px-[100px]">
+    <div className="mt-[72px] px-[100px]">
       <div className="flex flex-row items-center justify-between">
         <h1 className="mb-8 text-[42px] font-semibold">Products</h1>
         <div className="flex flex-row items-center gap-8">

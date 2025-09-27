@@ -1,11 +1,15 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import "./App.css";
-import ProductList from "./pages/product-list/ProductList";
-import { Suspense } from "react";
 import RootLayout from "./components/layout/RootLayout";
-import ProductDetails from "@/pages/product-details/ProductDetails";
-import RegisterPage from "@/pages/register-page/RegisterPage";
-import LoginPage from "@/pages/login-page/LoginPage";
+
+const ProductList = lazy(() => import("./pages/product-list/ProductList"));
+const ProductDetails = lazy(
+  () => import("@/pages/product-details/ProductDetails"),
+);
+const RegisterPage = lazy(() => import("@/pages/register-page/RegisterPage"));
+const LoginPage = lazy(() => import("@/pages/login-page/LoginPage"));
+const CheckoutPage = lazy(() => import("@/pages/checkout/CheckoutPage"));
 
 function App() {
   return (
@@ -42,6 +46,14 @@ function App() {
             element={
               <Suspense fallback="Loading...">
                 <LoginPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="checkout"
+            element={
+              <Suspense fallback="Loading...">
+                <CheckoutPage />
               </Suspense>
             }
           />

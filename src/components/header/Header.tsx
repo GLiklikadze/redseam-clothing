@@ -2,7 +2,7 @@ import CartSheet from "@/components/cart/CartSheet";
 import logo from "../../assets/HandEye.svg";
 import arrow from "../../assets/chevron-down.svg";
 import { useNavigate } from "react-router-dom";
-
+import user_logo from "../../assets/user.svg";
 const Header = () => {
   const navigate = useNavigate();
   const onLogoClick = () => {
@@ -20,9 +20,9 @@ const Header = () => {
       </div>
       <div className="flex items-center justify-center gap-[20px]">
         <CartSheet />
-        <div className="flex items-center justify-center gap-[10px]">
+        <div className="flex items-center justify-center ">
           {auth_token ? (
-            <div className="h-10 w-10">
+            <div className="h-10 w-10 flex flex-row items-center gap-[10px]">
               <img
                 src={
                   localStorage.getItem("user")
@@ -32,20 +32,23 @@ const Header = () => {
                 alt="user-avatar"
                 className="h-full w-full cursor-pointer rounded-full object-cover"
               />
+              <img
+                src={arrow}
+                alt="arrow-logo"
+                className="h-6 w-6 cursor-pointer"
+              />
             </div>
           ) : (
-            <span
-              onClick={() => navigate("/login")}
-              className="cursor-pointer text-[12px] font-medium"
-            >
-              Log in
-            </span>
+            <div className="flex flex-row items-center gap-2">
+              <img src={user_logo} alt="user-logo" className="h-5 w-5" />
+              <span
+                onClick={() => navigate("/login")}
+                className="cursor-pointer text-[12px] font-medium"
+              >
+                Log in
+              </span>
+            </div>
           )}
-          <img
-            src={arrow}
-            alt="arrow-logo"
-            className="h-6 w-6 cursor-pointer"
-          />
         </div>
       </div>
     </div>
