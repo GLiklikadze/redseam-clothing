@@ -1,4 +1,4 @@
-import * as prettierPluginTailwindcss from "prettier-plugin-tailwindcss";
+import * as tailwindPlugin from "prettier-plugin-tailwindcss";
 
 /** @type {import("prettier").Config} */
 export default {
@@ -6,5 +6,5 @@ export default {
   singleQuote: false,
   tabWidth: 2,
   trailingComma: "es5",
-  plugins: [prettierPluginTailwindcss],
+  plugins: [tailwindPlugin],
 };

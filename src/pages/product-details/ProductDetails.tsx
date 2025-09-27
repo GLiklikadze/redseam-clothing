@@ -15,10 +15,10 @@ export function ProductDetails() {
   const { mutate: mutateAddToCart } = useAddToCart();
 
   const [selectedSize, setSelectedSize] = useState(
-    productDetailsData?.available_colors?.[0] ?? ""
+    productDetailsData?.available_colors?.[0] ?? "",
   );
   const [selectedColor, setSelectedColor] = useState(
-    productDetailsData?.available_colors?.[0] ?? ""
+    productDetailsData?.available_colors?.[0] ?? "",
   );
   const [quantity, setQuantity] = useState(1);
 
@@ -50,7 +50,7 @@ export function ProductDetails() {
         quantity: quantity,
         color: selectedColor,
         size: selectedSize,
-      }
+      },
     );
   };
   console.log("data", productDetailsData);
