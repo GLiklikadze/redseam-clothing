@@ -37,11 +37,11 @@ const LoginPage = () => {
         <img
           src={register_image}
           alt="register_img"
-          className="w-[948px] h-[1000px] ml-0"
+          className="ml-0 h-[1000px] w-[948px]"
         />
       </div>
       <div className="space-y-[46px]">
-        <h1 className="text-[42px] font-semibold mt-[152px]">Log in</h1>
+        <h1 className="mt-[152px] text-[42px] font-semibold">Log in</h1>
         <div className="flex flex-col gap-6">
           <div className="w-[554px]">
             <Controller
@@ -62,7 +62,7 @@ const LoginPage = () => {
               }}
             />
             {errors.email && (
-              <div className="mr-10 text-xs mt-2 text-red-700">
+              <div className="mt-2 mr-10 text-xs text-red-700">
                 {errors?.email.message}
               </div>
             )}
@@ -94,7 +94,7 @@ const LoginPage = () => {
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#FF4000] text-[#FFFFFF] h-[41px] text-sm font-normal"
+            className="h-[41px] w-full bg-[#FF4000] text-sm font-normal text-[#FFFFFF]"
             onClick={handleSubmit(onSubmit)}
           >
             Log in
@@ -103,7 +103,7 @@ const LoginPage = () => {
             Not a member?{" "}
             <span
               onClick={() => navigate("/register")}
-              className="text-sm text-[#FF4000] font-medium cursor-pointer"
+              className="cursor-pointer text-sm font-medium text-[#FF4000]"
             >
               Register
             </span>

@@ -10,19 +10,19 @@ const Header = () => {
   };
   const auth_token = localStorage.getItem("auth_token");
   return (
-    <div className="flex h-[6.25rem]  items-center justify-between bg-gray-100 px-[100px]">
+    <div className="flex h-[6.25rem] items-center justify-between bg-gray-100 px-[100px]">
       <div
         onClick={onLogoClick}
-        className="flex justify-center gap-1 items-center cursor-pointer"
+        className="flex cursor-pointer items-center justify-center gap-1"
       >
         <img src={logo} alt="Redseam Clothing Logo" className="h-6 w-6" />
         <h1 className="text-[16px] font-semibold">Redseam Clothing</h1>
       </div>
-      <div className="flex justify-center items-center gap-[20px]">
+      <div className="flex items-center justify-center gap-[20px]">
         <CartSheet />
-        <div className="flex justify-center items-center gap-[10px] ">
+        <div className="flex items-center justify-center gap-[10px]">
           {auth_token ? (
-            <div className="w-10 h-10">
+            <div className="h-10 w-10">
               <img
                 src={
                   localStorage.getItem("user")
@@ -30,13 +30,13 @@ const Header = () => {
                     : ""
                 }
                 alt="user-avatar"
-                className="w-full h-full object-cover rounded-full cursor-pointer"
+                className="h-full w-full cursor-pointer rounded-full object-cover"
               />
             </div>
           ) : (
             <span
               onClick={() => navigate("/login")}
-              className="text-[12px] font-medium cursor-pointer"
+              className="cursor-pointer text-[12px] font-medium"
             >
               Log in
             </span>

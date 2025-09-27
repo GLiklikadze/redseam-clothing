@@ -10,19 +10,19 @@ export function ColorSelector({
   onColorChange,
 }: ColorSelectorProps) {
   return (
-    <div className="flex gap-2 ">
+    <div className="flex gap-2">
       {colors.map((color, index) => (
         <div
-          className={`w-[48px] h-[48px] flex justify-center items-center  ${
+          className={`flex h-[48px] w-[48px] items-center justify-center ${
             selectedColor === color
-              ? "border-[2px] rounded-full border-[#E1DFE1]"
+              ? "rounded-full border-[2px] border-[#E1DFE1]"
               : ""
           }`}
           key={index}
         >
           <button
             onClick={() => onColorChange(color)}
-            className={`w-[38px] h-[38px] rounded-full border-[0.5px] `}
+            className={`h-[38px] w-[38px] rounded-full border-[0.5px]`}
             style={{ backgroundColor: color }}
             title={color}
           />

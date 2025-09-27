@@ -45,15 +45,15 @@ const CartSheet = () => {
     <div className="flex flex-col justify-center">
       <img
         src={empty_cart}
-        className="w-[170px] h-[135px] mx-auto mt-[151px]"
+        className="mx-auto mt-[151px] h-[135px] w-[170px]"
         alt="empty-cart"
       />
-      <p className="text-2xl font-semibold text-center mt-6">Ooops!</p>
-      <p className="text-sm mt-2.5 font-normal text-center text-[#3E424A]">
+      <p className="mt-6 text-center text-2xl font-semibold">Ooops!</p>
+      <p className="mt-2.5 text-center text-sm font-normal text-[#3E424A]">
         You’ve got nothing in your cart just yet...
       </p>
       <Button
-        className="w-[214px] h-[41px] text-sm font-normal text-[#FFFFFF] mx-auto mt-[58px] bg-[#FF4000]"
+        className="mx-auto mt-[58px] h-[41px] w-[214px] bg-[#FF4000] text-sm font-normal text-[#FFFFFF]"
         onClick={() => {
           navigate("/");
           setOpenSheet(false);
@@ -91,7 +91,7 @@ const CartSheet = () => {
         </SheetTrigger>
         <SheetContent
           side="right"
-          className="w-[540px] sm:max-w-[540px] h-full px-10"
+          className="h-full w-[540px] px-10 sm:max-w-[540px]"
         >
           <SheetHeader className="px-0 py-[41px]">
             <SheetTitle className="">
@@ -101,8 +101,8 @@ const CartSheet = () => {
           </SheetHeader>
           {!cartDataArr?.[0] && emptyCartElements}
           {cartDataArr?.[0] && (
-            <div className="h-full flex flex-col justify-between">
-              <div className="h-[460px] flex flex-col gap-9 overflow-y-auto">
+            <div className="flex h-full flex-col justify-between">
+              <div className="flex h-[460px] flex-col gap-9 overflow-y-auto">
                 {cartDataArr?.map((product) => (
                   <div
                     key={`${product?.id}${product?.color}${product?.size}`}
@@ -110,22 +110,22 @@ const CartSheet = () => {
                   >
                     <img
                       src={product?.cover_image}
-                      className="w-[100px] h-[134px] border-[1px] border-[#E1DFE1] rounded-sm"
+                      className="h-[134px] w-[100px] rounded-sm border-[1px] border-[#E1DFE1]"
                       alt="product-img"
                     />
-                    <div className="w-[285px] flex flex-col justify-between ml-[17px] py-[8.5px]">
+                    <div className="ml-[17px] flex w-[285px] flex-col justify-between py-[8.5px]">
                       <div className="flex flex-col gap-2.5">
                         <p className="text-sm font-medium first-letter:uppercase">
                           {product?.name}
                         </p>
-                        <p className="text-xs text-[#3E424A] font-normal">
+                        <p className="text-xs font-normal text-[#3E424A]">
                           {product?.color}
                         </p>
-                        <p className="text-xs text-[#3E424A] font-normal">
+                        <p className="text-xs font-normal text-[#3E424A]">
                           {product?.size}
                         </p>
                       </div>
-                      <div className="w-[70px] h-[26px] flex flex-row justify-between items-center px-2 border-[1px] border-[#E1DFE1] rounded-[22px]">
+                      <div className="flex h-[26px] w-[70px] flex-row items-center justify-between rounded-[22px] border-[1px] border-[#E1DFE1] px-2">
                         <button
                           disabled={product?.quantity < 2}
                           onClick={() =>
@@ -170,7 +170,7 @@ const CartSheet = () => {
                       </div>
                     </div>
                     <div className="flex flex-col justify-between py-[8.5px]">
-                      <div className="text-[18px] font-medium whitespace-nowrap text-right">
+                      <div className="text-right text-[18px] font-medium whitespace-nowrap">
                         $ {product?.price}
                       </div>
                       <button
@@ -181,7 +181,7 @@ const CartSheet = () => {
                             product?.size
                           )
                         }
-                        className="text-xs text-[#3E424A] pb-1 font-normal cursor-pointer"
+                        className="cursor-pointer pb-1 text-xs font-normal text-[#3E424A]"
                       >
                         Remove
                       </button>
@@ -203,7 +203,7 @@ const CartSheet = () => {
                     <div>Total</div>$ {totalPrice}
                   </div>
                 </div>
-                <Button className="w-[460px] h-[58px] text-[#FFFFFF] mx-auto bg-[#FF4000] hover:bg-orange-600">
+                <Button className="mx-auto h-[58px] w-[460px] bg-[#FF4000] text-[#FFFFFF] hover:bg-orange-600">
                   Go to checkout
                 </Button>
               </div>

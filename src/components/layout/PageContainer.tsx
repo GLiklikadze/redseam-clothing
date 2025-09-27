@@ -1,6 +1,7 @@
-const PageContainer: React.FC<React.PropsWithChildren> = ({ children }) => {
+import React, { PropsWithChildren } from "react";
+const PageContainer: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="bg-[#FFFFFF] w-[1920px] min-h-[1080px]">{children}</div>
+    <div className="min-h-[1080px] w-[1920px] bg-[#FFFFFF]">{children}</div>
   );
 };
 

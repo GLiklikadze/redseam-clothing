@@ -10,18 +10,18 @@ const ProductContainer: React.FC<{ data: Product }> = ({ data }) => {
   return (
     <div
       onClick={onProductClick}
-      className="w-[412px] h-[614px] cursor-pointer"
+      className="h-[614px] w-[412px] cursor-pointer space-y-3"
     >
-      <div className="bg-amber-100 h-[549px] w-[412px]">
+      <div className="h-[549px] w-[412px] bg-amber-100">
         <img
           src={data?.cover_image}
           alt={data?.name}
           className="h-full w-full object-cover"
         />
       </div>
-      <div className="h-[65px] w-[412px]">
-        <div>Kids' Curved Hilfiger Graphic T-Shirt</div>
-        <div>$ {data?.price}</div>
+      <div className="h-[65px] w-[412px] space-y-0.5">
+        <div className="text-[18px] font-medium capitalize">{data?.name}</div>
+        <div className="text-[16px] font-medium">$ {data?.price}</div>
       </div>
     </div>
   );

@@ -62,21 +62,21 @@ const RegisterPage = () => {
         <img
           src={register_image}
           alt="register_img"
-          className="w-[948px] h-[1000px] ml-0"
+          className="ml-0 h-[1000px] w-[948px]"
         />
       </div>
       <div className="space-y-[46px]">
-        <h1 className="text-[42px] font-semibold mt-[152px]">Registration</h1>
+        <h1 className="mt-[152px] text-[42px] font-semibold">Registration</h1>
 
-        <div className="w-[272px] h-[100px] flex flex-row gap-[15px] items-center">
-          <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
+        <div className="flex h-[100px] w-[272px] flex-row items-center gap-[15px]">
+          <div className="h-[100px] w-[100px] overflow-hidden rounded-full">
             <img
               src={previewUrl || upload_avatar}
               alt="user_avatar"
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
-          <label className="text-sm font-normal cursor-pointer">
+          <label className="cursor-pointer text-sm font-normal">
             Upload new
             <input
               type="file"
@@ -86,7 +86,7 @@ const RegisterPage = () => {
             />
           </label>
           <p
-            className="text-sm font-normal cursor-pointer"
+            className="cursor-pointer text-sm font-normal"
             onClick={() => {
               setValue("avatar", null);
               setPreviewUrl(null);
@@ -95,7 +95,7 @@ const RegisterPage = () => {
             Remove
           </p>
         </div>
-        <div className="w-[554px] flex flex-col gap-6">
+        <div className="flex w-[554px] flex-col gap-6">
           <div>
             <Controller
               name="userName"
@@ -115,7 +115,7 @@ const RegisterPage = () => {
               }}
             />
             {errors.userName && (
-              <div className="mr-10 mt-2 text-[10px] text-red-700">
+              <div className="mt-2 mr-10 text-[10px] text-red-700">
                 {errors.userName?.message}
               </div>
             )}
@@ -139,7 +139,7 @@ const RegisterPage = () => {
               }}
             />
             {errors.email && (
-              <div className="mr-10 mt-2 text-[10px] text-red-700">
+              <div className="mt-2 mr-10 text-[10px] text-red-700">
                 {errors.email?.message}
               </div>
             )}
@@ -189,14 +189,14 @@ const RegisterPage = () => {
               }}
             />
             {errors.confirmPassword && (
-              <div className="mr-10 mt-2 text-[10px] text-red-700">
+              <div className="mt-2 mr-10 text-[10px] text-red-700">
                 {errors?.confirmPassword?.message}
               </div>
             )}
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#FF4000] text-[#FFFFFF] h-[41px] text-sm font-normal"
+            className="h-[41px] w-full bg-[#FF4000] text-sm font-normal text-[#FFFFFF]"
             onClick={handleSubmit(onSubmit)}
           >
             Register
@@ -205,7 +205,7 @@ const RegisterPage = () => {
             Already member ?{" "}
             <span
               onClick={() => navigate("/login")}
-              className="text-sm text-[#FF4000] font-medium cursor-pointer"
+              className="cursor-pointer text-sm font-medium text-[#FF4000]"
             >
               Log in
             </span>

@@ -33,6 +33,12 @@ const initialOptionsObj = {
   priceFrom: "",
   priceTo: "",
 };
+
+const sortObject = {
+  created_at: "New products first",
+  price: "Price, low to high",
+  "-price": "Price, high to low",
+};
 const ProductList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = Number(searchParams.get("page")) || 1;
@@ -152,81 +158,84 @@ const ProductList = () => {
 
   return (
     <div className="bg-[#FFFFFF] px-[100px]">
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row items-center justify-between">
         <h1 className="mb-8 text-[42px] font-semibold">Products</h1>
-        <div className="flex flex-row items-center gap-16">
-          <p className="text-[12px] font-normal text-gray-500">
+        <div className="flex flex-row items-center gap-8">
+          <p className="text-[12px] font-normal text-[#3E424A]">
             Showing {productListResponse?.meta?.from}-
             {productListResponse?.meta?.to} of{" "}
             {productListResponse?.meta?.total} results
           </p>
-          <div className="flex flex-row gap-2"></div>
-          <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="gap-2 bg-white border-gray-300 hover:bg-gray-100"
+          <div className="ml-8 flex flex-row gap-2">
+            <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2 border-gray-300 bg-white hover:bg-gray-100"
+                >
+                  <img src={adj_horizontal} alt="filter-icon" />
+                  <div className="text-base font-normal">Filter</div>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="h-[169px] w-[392px] bg-[FFFFFF] p-0"
+                align="end"
               >
-                <img src={adj_horizontal} alt="filter-icon" />
-                <div className="text-base font-normal">Filter</div>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent
-              className="w-[392px] h-[169px] bg-[FFFFFF] p-0"
-              align="end"
-            >
-              <div className="bg-[#FFFFFF] border-2 border-[#E1DFE1] p-6 rounded-lg">
-                <h3 className="font-medium mb-4 text-gray-900">Select price</h3>
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="flex-1">
-                    <Controller
-                      name="priceFrom"
-                      control={control}
-                      render={({ field: { value, onChange, onBlur } }) => {
-                        return (
-                          <Input
-                            id="priceFrom"
-                            type="number"
-                            value={value}
-                            placeholder="From *"
-                            onChange={onChange}
-                            onBlur={onBlur}
-                          />
-                        );
-                      }}
-                    />
+                <div className="rounded-lg border-2 border-[#E1DFE1] bg-[#FFFFFF] p-6">
+                  <h3 className="mb-4 font-medium text-gray-900">
+                    Select price
+                  </h3>
+                  <div className="mb-4 flex items-center gap-4">
+                    <div className="flex-1">
+                      <Controller
+                        name="priceFrom"
+                        control={control}
+                        render={({ field: { value, onChange, onBlur } }) => {
+                          return (
+                            <Input
+                              id="priceFrom"
+                              type="number"
+                              value={value}
+                              placeholder="From *"
+                              onChange={onChange}
+                              onBlur={onBlur}
+                            />
+                          );
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <Controller
+                        name="priceTo"
+                        control={control}
+                        render={({ field: { value, onChange, onBlur } }) => {
+                          return (
+                            <Input
+                              id="priceTo"
+                              type="number"
+                              value={value}
+                              placeholder="To *"
+                              onChange={onChange}
+                              onBlur={onBlur}
+                            />
+                          );
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <Controller
-                      name="priceTo"
-                      control={control}
-                      render={({ field: { value, onChange, onBlur } }) => {
-                        return (
-                          <Input
-                            id="priceTo"
-                            type="number"
-                            value={value}
-                            placeholder="To *"
-                            onChange={onChange}
-                            onBlur={onBlur}
-                          />
-                        );
-                      }}
-                    />
+                  <div className="flex flex-row-reverse">
+                    <Button
+                      onClick={handleSubmit(handleApplyFilter)}
+                      className="rounded-md bg-[#FF4000] px-8 py-2 text-sm font-normal text-[#FFFFFF] hover:bg-orange-500"
+                    >
+                      Apply
+                    </Button>
                   </div>
                 </div>
-                <div className="flex flex-row-reverse">
-                  <Button
-                    onClick={handleSubmit(handleApplyFilter)}
-                    className="bg-[#FF4000] hover:bg-orange-500 text-[#FFFFFF] font-normal text-sm px-8 py-2 rounded-md"
-                  >
-                    Apply
-                  </Button>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+              </PopoverContent>
+            </Popover>
+          </div>
           <div className="flex flex-row gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -235,13 +244,15 @@ const ProductList = () => {
                   size="sm"
                   className="gap-2 bg-transparent"
                 >
-                  <div className="text-base font-normal">Sort By</div>
+                  <div className="text-base font-normal">
+                    {sortBy ? sortObject?.[sortBy] : "Sort By"}
+                  </div>
                   <img src={arrow_down} alt="arrow-down-icon" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[223px] h-[184px]">
-                <div className="p-2">
-                  <p className="font-medium text-sm mb-2">Sort by</p>
+              <DropdownMenuContent align="end" className="h-[184px] w-[223px]">
+                <div className="p-4">
+                  <p className="mb-2 px-2 text-base font-semibold">Sort by</p>
                   <DropdownMenuItem
                     onClick={() => {
                       setSortBy("created_at");
@@ -250,6 +261,7 @@ const ProductList = () => {
                         sort: "created_at",
                       });
                     }}
+                    className="text-base"
                   >
                     New products first
                   </DropdownMenuItem>
@@ -261,6 +273,7 @@ const ProductList = () => {
                         sort: "price",
                       });
                     }}
+                    className="text-base"
                   >
                     Price, low to high
                   </DropdownMenuItem>
@@ -272,6 +285,7 @@ const ProductList = () => {
                         sort: "-price",
                       });
                     }}
+                    className="text-base"
                   >
                     Price, high to low
                   </DropdownMenuItem>
@@ -282,12 +296,12 @@ const ProductList = () => {
         </div>
       </div>
 
-      <div className="flex gap-x-4 gap-y-8 flex-wrap ">
+      <div className="flex flex-wrap gap-x-4 gap-y-8">
         {productListResponse?.data?.map((data: Product) => (
           <ProductContainer key={data?.id} data={data} />
         ))}
       </div>
-      <Pagination className="flex flex-row mt-[90px] mb-[256px]">
+      <Pagination className="mt-[90px] mb-[256px] flex flex-row">
         <PaginationContent>
           <PaginationPrevious onClick={(e) => handlePreviousPage(e)} />
 

@@ -57,12 +57,12 @@ export function ProductDetails() {
   return (
     <div className="bg-[#FFFFFF] px-[100px]">
       <p className="mt-[30px]">Listing / Product</p>
-      <div className="flex flex-row gap-[168px] mt-[49px] pb-[100px]">
+      <div className="mt-[49px] flex flex-row gap-[168px] pb-[100px]">
         <div className="flex flex-row gap-6">
           <div className="flex flex-col gap-[9px]">
             {productDetailsData?.images.map((_: string, index: number) => {
               return (
-                <div key={index} className="w-[121px] h-[161px]">
+                <div key={index} className="h-[161px] w-[121px]">
                   <img
                     src={productDetailsData?.images?.[index]}
                     alt="product-photo"
@@ -71,7 +71,7 @@ export function ProductDetails() {
               );
             })}
           </div>
-          <div className="w-[704px] h-[907px] rounded-[10px]">
+          <div className="h-[907px] w-[704px] rounded-[10px]">
             <img
               src={
                 productDetailsData?.images?.[
@@ -83,13 +83,13 @@ export function ProductDetails() {
             />
           </div>
         </div>
-        <div className="space-y-6 w-[704px] h-[907px]">
+        <div className="h-[907px] w-[704px] space-y-6">
           {/* Product Title and Price */}
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-foreground capitalize text-balance">
+            <h1 className="text-foreground text-3xl font-bold text-balance capitalize">
               {productDetailsData?.name}
             </h1>
-            <p className="text-3xl font-bold text-foreground">
+            <p className="text-foreground text-3xl font-bold">
               $ {productDetailsData?.price}
             </p>
           </div>
@@ -97,7 +97,7 @@ export function ProductDetails() {
           {/* Color Selection */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-base ">Color:</span>
+              <span className="text-base">Color:</span>
               <span>{selectedColor}</span>
             </div>
             <ColorSelector
@@ -110,8 +110,8 @@ export function ProductDetails() {
           {/* Size Selection */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-foreground">Size:</span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-foreground text-sm font-medium">Size:</span>
+              <span className="text-muted-foreground text-sm">
                 {selectedSize}
               </span>
             </div>
@@ -124,7 +124,7 @@ export function ProductDetails() {
 
           {/* Quantity Selection */}
           <div className="space-y-3">
-            <div className="text-sm font-medium mb-4">Quantity</div>
+            <div className="mb-4 text-sm font-medium">Quantity</div>
             <QuantitySelector
               quantity={quantity}
               onQuantityChange={onQuantityChange}
@@ -133,31 +133,31 @@ export function ProductDetails() {
 
           {/* Add to Cart Button */}
           <Button
-            className="w-full mb-[56px] bg-[#ff4500] hover:bg-[#e63e00] text-white font-medium py-3 text-base"
+            className="mb-[56px] w-full bg-[#ff4500] py-3 text-base font-medium text-white hover:bg-[#e63e00]"
             size="lg"
             onClick={handleAddToCart}
           >
-            <ShoppingCart className="w-5 h-5 mr-2" />
+            <ShoppingCart className="mr-2 h-5 w-5" />
             Add to cart
           </Button>
 
           {/* Product Details */}
-          <div className="space-y-4 pt-14 border-t border-border">
+          <div className="border-border space-y-4 border-t pt-14">
             <div className="flex flex-row items-center justify-between">
-              <h3 className="text-[20px] font-medium ">Details</h3>
+              <h3 className="text-[20px] font-medium">Details</h3>
               <img
                 src={productDetailsData?.brand?.image}
                 alt="brand-logo"
-                className="w-[109px] h-[61px] "
+                className="h-[61px] w-[109px]"
               />
             </div>
 
             <div className="space-y-2">
               <p className="text-sm">
-                <span className="font-medium ">Brand:</span>{" "}
+                <span className="font-medium">Brand:</span>{" "}
                 {productDetailsData?.brand?.name}
               </p>
-              <p className="text-sm text-muted-foreground overflow break-words whitespace-normal">
+              <p className="text-muted-foreground overflow text-sm break-words whitespace-normal">
                 {productDetailsData?.description}
               </p>
             </div>
