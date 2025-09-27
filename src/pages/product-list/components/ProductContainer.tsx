@@ -8,7 +8,10 @@ const ProductContainer: React.FC<{ data: Product }> = ({ data }) => {
     navigate(`/products/${data.id}`);
   };
   return (
-    <div onClick={onProductClick} className="w-[412px] h-[614px]">
+    <div
+      onClick={onProductClick}
+      className="w-[412px] h-[614px] cursor-pointer"
+    >
       <div className="bg-amber-100 h-[549px] w-[412px]">
         <img
           src={data?.cover_image}

@@ -13,7 +13,10 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useGetCartData } from "@/react-query/query/cart/cartQuery";
 import { Minus, Plus } from "lucide-react";
-import { useDeteteCartItem } from "@/react-query/mutation/cart/cartMutation";
+import {
+  useChangeCartItemQuantity,
+  useDeleteCartItem,
+} from "@/react-query/mutation/cart/cartMutation";
 
 const CartSheet = () => {
   const navigate = useNavigate();
@@ -26,7 +29,8 @@ const CartSheet = () => {
       ?.map((product) => product?.total_price)
       .reduce((a, b) => a + b, 0) ?? 0;
   console.log("mycart", cartDataArr);
-  const { mutate: mutateDeleteCartItem } = useDeteteCartItem();
+  const { mutate: mutateDeleteCartItem } = useDeleteCartItem();
+  const { mutate: mutateChangeQuantity } = useChangeCartItemQuantity();
 
   const handleDeleteCartItem = (
     product: number,
@@ -59,7 +63,19 @@ const CartSheet = () => {
       </Button>
     </div>
   );
-
+  const handleChangeQuantity = (
+    product: string,
+    changedQuantity: string | number,
+    color: string,
+    size: string
+  ) => {
+    mutateChangeQuantity({
+      product,
+      quantity: changedQuantity,
+      color,
+      size,
+    });
+  };
   return (
     <div>
       {" "}
@@ -110,23 +126,47 @@ const CartSheet = () => {
                         </p>
                       </div>
                       <div className="w-[70px] h-[26px] flex flex-row justify-between items-center px-2 border-[1px] border-[#E1DFE1] rounded-[22px]">
-                        <Minus
-                          className={`h-4 w-4 ${
-                            product?.quantity < 2
-                              ? "text-[#E1DFE1]"
-                              : "text-[#3E424A]"
-                          } cursor-pointer`}
-                        />
+                        <button
+                          disabled={product?.quantity < 2}
+                          onClick={() =>
+                            handleChangeQuantity(
+                              String(product?.id),
+                              product?.quantity - 1,
+                              product?.color,
+                              product?.size
+                            )
+                          }
+                        >
+                          <Minus
+                            className={`h-4 w-4 ${
+                              product?.quantity < 2
+                                ? "text-[#E1DFE1]"
+                                : "text-[#3E424A]"
+                            } cursor-pointer`}
+                          />
+                        </button>
                         <div className="text-xs font-normal">
                           {product?.quantity}
                         </div>
-                        <Plus
-                          className={`h-4 w-4 ${
-                            product?.quantity < 10
-                              ? "text-[#3E424A]"
-                              : "text-[#E1DFE1]"
-                          } cursor-pointer`}
-                        />
+                        <button
+                          disabled={product?.quantity > 9}
+                          onClick={() =>
+                            handleChangeQuantity(
+                              String(product?.id),
+                              product?.quantity + 1,
+                              product?.color,
+                              product?.size
+                            )
+                          }
+                        >
+                          <Plus
+                            className={`h-4 w-4 ${
+                              product?.quantity < 10
+                                ? "text-[#3E424A]"
+                                : "text-[#E1DFE1]"
+                            } cursor-pointer`}
+                          />
+                        </button>
                       </div>
                     </div>
                     <div className="flex flex-col justify-between py-[8.5px]">

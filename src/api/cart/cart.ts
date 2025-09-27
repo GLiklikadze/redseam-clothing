@@ -5,6 +5,13 @@ type DeleteCartItemProps = {
   color: string;
   size: string;
 };
+
+type ChangeCartItemQuantityProps = {
+  product: string | number;
+  color: string;
+  size: string;
+  quantity: string | number;
+};
 export const getCartData = async () => {
   try {
     const { data, status, statusText } = await httpClient.get(`cart`);
@@ -44,6 +51,32 @@ export const deleteCartItem = async ({
     return data;
   } catch (err) {
     console.error("Can`t detele cart item", err);
+    throw err;
+  }
+};
+
+export const changeCartItemQuantity = async ({
+  product,
+  quantity,
+  color,
+  size,
+}: ChangeCartItemQuantityProps) => {
+  try {
+    const { data, status, statusText } = await httpClient.patch(
+      `cart/products/${product}`,
+      {
+        quantity: quantity,
+        color: color,
+        size: size,
+      }
+    );
+
+    if (status !== 200 && status !== 201 && status !== 204) {
+      throw new Error(`HTTP error! status ${status} ${statusText}`);
+    }
+    return data;
+  } catch (err) {
+    console.error("Can`t change cart item quantity", err);
     throw err;
   }
 };
