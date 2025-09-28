@@ -30,7 +30,7 @@ export interface ProductsResponse {
 }
 
 export type FilterAndSortOptions = {
-  priceFrom: number | string;
-  priceTo: number | string;
+  priceFrom: string;
+  priceTo: string;
 };
 export type SortOption = "price" | "created_at" | "-price" | "";

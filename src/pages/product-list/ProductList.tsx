@@ -28,17 +28,16 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Controller, useForm } from "react-hook-form";
+import {
+  getPageNumbers,
+  handleNextPage,
+  handlePreviousPage,
+} from "@/pages/product-list/components/utils";
+import {
+  initialOptionsObj,
+  sortObject,
+} from "@/pages/product-list/components/staticData";
 
-const initialOptionsObj = {
-  priceFrom: "",
-  priceTo: "",
-};
-
-const sortObject = {
-  created_at: "New products first",
-  price: "Price, low to high",
-  "-price": "Price, high to low",
-};
 const ProductList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = Number(searchParams.get("page")) || 1;
@@ -56,9 +55,8 @@ const ProductList = () => {
     filters?.priceTo,
     sortBy,
   );
-  const { control, handleSubmit } = useForm<FilterAndSortOptions>({
+  const { control, handleSubmit, reset } = useForm<FilterAndSortOptions>({
     defaultValues: initialOptionsObj,
-
     mode: "onBlur",
   });
 
@@ -78,89 +76,21 @@ const ProductList = () => {
 
   const totalPages = productListResponse?.meta?.last_page || 1;
 
-  const getPageNumbers = () => {
-    const pages: (number | "ellipsis")[] = [];
-
-    const addPage = (page: number) => {
-      if (!pages.includes(page) && page >= 1 && page <= totalPages) {
-        pages.push(page);
-      }
-    };
-
-    // Always show first two
-    addPage(1);
-    addPage(2);
-
-    // Previous, current, next
-    addPage(currentPage - 1);
-    addPage(currentPage);
-    addPage(currentPage + 1);
-
-    // Always show last two
-    addPage(totalPages - 1);
-    addPage(totalPages);
-
-    // Sort pages
-    pages.sort((a, b) => (a === "ellipsis" || b === "ellipsis" ? 0 : a - b));
-
-    // Insert ellipses
-    const finalPages: (number | "ellipsis")[] = [];
-    for (let i = 0; i < pages.length; i++) {
-      if (i === 0) {
-        finalPages.push(pages[i]);
-        continue;
-      }
-
-      if (typeof pages[i] === "number" && typeof pages[i - 1] === "number") {
-        if ((pages[i] as number) - (pages[i - 1] as number) > 1) {
-          finalPages.push("ellipsis");
-        }
-      }
-
-      finalPages.push(pages[i]);
-    }
-
-    return finalPages;
-  };
-
-  const handlePreviousPage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const newPage = currentPage - 1 > 0 ? currentPage - 1 : 1;
-    setCurrentPage(newPage);
-
-    const params: Record<string, string> = { page: String(newPage) };
-
-    if (filters?.priceFrom) {
-      params.priceFrom = filters.priceFrom;
-    }
-    if (filters?.priceTo) {
-      params.priceTo = filters.priceTo;
-    }
-    setSearchParams(params);
-  };
-
-  const handleNextPage = (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    const newPage = currentPage + 1 < totalPages ? currentPage + 1 : totalPages;
-    setCurrentPage(newPage);
-
-    const params: Record<string, string> = { page: String(newPage) };
-
-    if (filters?.priceFrom) {
-      params.priceFrom = filters.priceFrom;
-    }
-    if (filters?.priceTo) {
-      params.priceTo = filters.priceTo;
-    }
-    setSearchParams(params);
-  };
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  console.log("productListData", productListResponse);
+
+  const handleFilterClear = () => {
+    setFilters({});
+    reset({ priceFrom: "", priceTo: "" });
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete("priceFrom");
+    newParams.delete("priceTo");
+    newParams.set("page", "1");
+    setSearchParams(newParams);
+    setIsFilterOpen(false);
+  };
 
   return (
     <div className="mt-[72px] px-[100px]">
@@ -230,7 +160,13 @@ const ProductList = () => {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-row-reverse">
+                  <div className="flex flex-row justify-between">
+                    <Button
+                      onClick={handleFilterClear}
+                      className="rounded-md border-2 border-orange-500 bg-[#FFFFFF] px-8 py-2 text-sm font-normal text-[#FF4000]"
+                    >
+                      Clear
+                    </Button>
                     <Button
                       onClick={handleSubmit(handleApplyFilter)}
                       className="rounded-md bg-[#FF4000] px-8 py-2 text-sm font-normal text-[#FFFFFF] hover:bg-orange-500"
@@ -310,11 +246,23 @@ const ProductList = () => {
       <Pagination className="mt-[90px] mb-[256px] flex flex-row">
         <PaginationContent>
           <PaginationPrevious
-            onClick={(e) => handlePreviousPage(e)}
+            onClick={(e) =>
+              handlePreviousPage(
+                e,
+                setCurrentPage,
+                currentPage,
+                totalPages,
+                {
+                  priceFrom: filters.priceFrom ?? "",
+                  priceTo: filters.priceTo ?? "",
+                },
+                setSearchParams,
+              )
+            }
             className="cursor-pointer hover:bg-[#FF4000]"
           />
 
-          {getPageNumbers().map((page, index) => (
+          {getPageNumbers(currentPage, totalPages).map((page, index) => (
             <PaginationItem key={index}>
               {page === "ellipsis" ? (
                 <PaginationEllipsis />
@@ -332,7 +280,9 @@ const ProductList = () => {
                     if (filters?.priceTo) {
                       params.priceTo = filters.priceTo;
                     }
-
+                    if (sortBy) {
+                      params.sort = sortBy;
+                    }
                     setSearchParams(params);
                   }}
                   isActive={currentPage === page}
@@ -346,7 +296,21 @@ const ProductList = () => {
 
           <PaginationItem>
             <PaginationNext
-              onClick={(e) => handleNextPage(e)}
+              onClick={(e) =>
+                handleNextPage(
+                  e,
+                  setCurrentPage,
+                  currentPage,
+                  totalPages,
+
+                  {
+                    priceFrom: filters.priceFrom ?? "",
+                    priceTo: filters.priceTo ?? "",
+                  },
+                  setSearchParams,
+                  sortBy,
+                )
+              }
               className="cursor-pointer hover:bg-[#FF4000]"
             />
           </PaginationItem>

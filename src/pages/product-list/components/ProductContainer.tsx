@@ -20,7 +20,9 @@ const ProductContainer: React.FC<{ data: Product }> = ({ data }) => {
         />
       </div>
       <div className="h-[65px] w-[412px] space-y-0.5">
-        <div className="text-[18px] font-medium capitalize">{data?.name}</div>
+        <div className="truncate text-[18px] font-medium capitalize">
+          {data?.name}
+        </div>
         <div className="text-[16px] font-medium">$ {data?.price}</div>
       </div>
     </div>

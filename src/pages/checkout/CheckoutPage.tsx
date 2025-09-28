@@ -117,7 +117,7 @@ const CheckoutPage = () => {
                       id="email"
                       type="email"
                       value={value}
-                      className={`${errors.email && "border-red-500"} h-[42px] w-[578px] bg-[#FFFFFF] pl-9`}
+                      className={`${errors.email && "border-red-500"} h-[42px] w-[578px] bg-[#FFFFFF] pl-8`}
                       onChange={onChange}
                       placeholder="      Email *"
                       onBlur={onBlur}
