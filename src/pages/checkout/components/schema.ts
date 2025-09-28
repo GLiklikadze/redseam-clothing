@@ -14,10 +14,7 @@ export const CheckoutDetailsSchema = z.object({
     .nonempty({ message: "Email is required" })
     .email({ message: "Please enter valid email address" }),
 
-  zip_code: z
-    .string()
-    .nonempty({ message: "Zip is required" })
-    .min(3, { message: "Zip is too short" }),
+  zip_code: z.number().min(3, { message: "Zip is too short" }),
   address: z
     .string()
     .nonempty({ message: "Address is required" })
