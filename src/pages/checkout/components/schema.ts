@@ -16,8 +16,8 @@ export const CheckoutDetailsSchema = z.object({
 
   zip_code: z
     .string()
-    .nonempty({ message: "Zip is required" })
-    .min(3, { message: "Zip is too short" }),
+    .regex(/^\d+$/, "Must be a number")
+    .min(3, { message: "Zip code is too short" }),
   address: z
     .string()
     .nonempty({ message: "Address is required" })
