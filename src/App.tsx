@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import "./App.css";
 import RootLayout from "./components/layout/RootLayout";
+import IsUnAuthGuard from "@/components/guards/IsUnAuthGuard";
+import IsAuthGuard from "@/components/guards/IsAuthGuard";
 
 const ProductList = lazy(() => import("./pages/product-list/ProductList"));
 const ProductDetails = lazy(
@@ -33,6 +35,7 @@ function App() {
               </Suspense>
             }
           />
+          <Route element={<IsAuthGuard />}>
           <Route
             path="register"
             element={
@@ -49,6 +52,8 @@ function App() {
               </Suspense>
             }
           />
+          </Route>
+            <Route element={<IsUnAuthGuard />}>
           <Route
             path="checkout"
             element={
@@ -57,6 +62,7 @@ function App() {
               </Suspense>
             }
           />
+        </Route>
         </Route>
       </Routes>
     </>
