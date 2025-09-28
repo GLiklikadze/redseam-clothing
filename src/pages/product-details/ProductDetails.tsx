@@ -38,10 +38,10 @@ export function ProductDetails() {
       setSelectedSize(productDetailsData.available_sizes?.[0] ?? "");
     }
   }, [productDetailsData]);
-  
-const token = localStorage.getItem("auth_token");
+
+  const token = localStorage.getItem("auth_token");
   const handleAddToCart = () => {
-    if(token){
+    if (token) {
       mutateAddToCart({
         product: productDetailsData?.id,
         quantity: quantity,
@@ -56,9 +56,8 @@ const token = localStorage.getItem("auth_token");
           size: selectedSize,
         }
       );
-    
-    }else{
-    (navigate("/login"))
+    } else {
+      navigate("/login");
     }
   };
   console.log("data", productDetailsData);

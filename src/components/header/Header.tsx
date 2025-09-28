@@ -26,11 +26,7 @@ const Header = () => {
           {auth_token ? (
             <div className="flex h-10 w-10 flex-row items-center gap-[10px]">
               <img
-                src={
-                saved_avatar
-                    ? saved_avatar
-                    : user_avatar
-                }
+                src={saved_avatar ? saved_avatar : user_avatar}
                 alt="user-avatar"
                 className="h-full w-full cursor-pointer rounded-full object-cover"
               />

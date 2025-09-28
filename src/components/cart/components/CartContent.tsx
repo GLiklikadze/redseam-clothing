@@ -4,7 +4,6 @@ import {
   useChangeCartItemQuantity,
   useDeleteCartItem,
 } from "@/react-query/mutation/cart/cartMutation";
-import { Button } from "@/components/ui/button";
 import { PropsWithChildren } from "react";
 
 const CartContent: React.FC<PropsWithChildren> = ({ children }) => {

@@ -7,7 +7,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { CheckoutDetailsSchema } from "@/pages/checkout/components/schema";
@@ -39,7 +38,7 @@ const initialCheckoutInfoObj = {
 };
 
 const CheckoutPage = () => {
-  const { mutate: mutateCheckout, isSuccess } = useCheckout();
+  const { mutate: mutateCheckout } = useCheckout();
   const {
     control,
     handleSubmit,

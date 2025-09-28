@@ -36,33 +36,33 @@ function App() {
             }
           />
           <Route element={<IsAuthGuard />}>
-          <Route
-            path="register"
-            element={
-              <Suspense fallback="Loading...">
-                <RegisterPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="login"
-            element={
-              <Suspense fallback="Loading...">
-                <LoginPage />
-              </Suspense>
-            }
-          />
+            <Route
+              path="register"
+              element={
+                <Suspense fallback="Loading...">
+                  <RegisterPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="login"
+              element={
+                <Suspense fallback="Loading...">
+                  <LoginPage />
+                </Suspense>
+              }
+            />
           </Route>
-            <Route element={<IsUnAuthGuard />}>
-          <Route
-            path="checkout"
-            element={
-              <Suspense fallback="Loading...">
-                <CheckoutPage />
-              </Suspense>
-            }
-          />
-        </Route>
+          <Route element={<IsUnAuthGuard />}>
+            <Route
+              path="checkout"
+              element={
+                <Suspense fallback="Loading...">
+                  <CheckoutPage />
+                </Suspense>
+              }
+            />
+          </Route>
         </Route>
       </Routes>
     </>
