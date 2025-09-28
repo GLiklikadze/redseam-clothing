@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { RegisterFormSchema } from "@/pages/register-page/components/schema";
 import { RegisterFormValues } from "@/pages/register-page/components/types";
+import { AlertDestructive } from "@/components/error/errorAlert";
 
 const initialRegisterObj = {
   userName: "",
@@ -32,8 +33,7 @@ const RegisterPage = () => {
     mode: "onBlur",
   });
 
-  const { mutate } = useRegister();
-  // const { mutate, isPending, isError, error, isSuccess } = useRegister();
+  const { mutate, error, isError, isPending } = useRegister();
 
   const onSubmit = (fieldValues: RegisterFormValues) => {
     const formData = {
@@ -195,12 +195,21 @@ const RegisterPage = () => {
             )}
           </div>
           <Button
+            disabled={isPending}
             type="submit"
             className="h-[41px] w-full bg-[#FF4000] text-sm font-normal text-[#FFFFFF]"
             onClick={handleSubmit(onSubmit)}
           >
             Register
           </Button>
+          {isError && (
+            <div className="mt-4">
+              <AlertDestructive
+                alertTitle={error.message}
+                alertDescription="Please enter valid credentials."
+              />
+            </div>
+          )}
           <p className="mx-auto text-sm font-normal">
             Already member ?{" "}
             <span

@@ -54,7 +54,7 @@ const ProductList = () => {
     currentPage,
     filters?.priceFrom,
     filters?.priceTo,
-    sortBy
+    sortBy,
   );
   const { control, handleSubmit } = useForm<FilterAndSortOptions>({
     defaultValues: initialOptionsObj,

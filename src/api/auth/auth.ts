@@ -34,7 +34,7 @@ export const register = async ({
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     if (status !== 200 && status !== 201) {

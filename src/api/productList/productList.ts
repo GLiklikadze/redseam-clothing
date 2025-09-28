@@ -4,11 +4,11 @@ export const getList = async (
   page: number,
   priceFrom = "0",
   priceTo = "9999999",
-  sortBy: SortOption
+  sortBy: SortOption,
 ) => {
   try {
     const { data, status, statusText } = await httpClient.get(
-      `products/?page=${page}&filter[price_from]=${priceFrom}&filter[price_to]=${priceTo}&sort=${sortBy}`
+      `products/?page=${page}&filter[price_from]=${priceFrom}&filter[price_to]=${priceTo}&sort=${sortBy}`,
     );
     if (status !== 200 && status !== 201) {
       throw new Error(`HTTP error! status: ${status} ${statusText}`);

@@ -11,8 +11,8 @@ const Header = () => {
   };
   const auth_token = localStorage.getItem("auth_token");
   const saved_avatar = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user")!).avatar
-  : null;
+    ? JSON.parse(localStorage.getItem("user")!).avatar
+    : null;
   return (
     <div className="flex h-[6.25rem] items-center justify-between bg-gray-100 px-[100px]">
       <div

@@ -23,7 +23,7 @@ export const cartCheckout = async ({
         email,
         address,
         zip_code,
-      }
+      },
     );
 
     if (status !== 200 && status !== 201 && status !== 204) {

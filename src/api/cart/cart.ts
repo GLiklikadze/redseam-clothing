@@ -39,7 +39,7 @@ export const deleteCartItem = async ({
           color: color,
           size: size,
         },
-      }
+      },
     );
     console.log({
       color: color,
@@ -68,7 +68,7 @@ export const changeCartItemQuantity = async ({
         quantity: quantity,
         color: color,
         size: size,
-      }
+      },
     );
 
     if (status !== 200 && status !== 201 && status !== 204) {

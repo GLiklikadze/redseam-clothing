@@ -1,3 +1,4 @@
+import { AlertDestructive } from "@/components/error/errorAlert";
 import { Button } from "@/components/ui/button";
 import { ColorSelector } from "@/pages/product-details/components/ColorSelector";
 import { QuantitySelector } from "@/pages/product-details/components/QuantitySelector";
@@ -13,13 +14,13 @@ export function ProductDetails() {
   const { data: productDetailsData } = useGetProductDetails(products_id ?? "");
   const navigate = useNavigate();
 
-  const { mutate: mutateAddToCart } = useAddToCart();
+  const { mutate: mutateAddToCart, isPending, error, isError } = useAddToCart();
 
   const [selectedSize, setSelectedSize] = useState(
-    productDetailsData?.available_colors?.[0] ?? ""
+    productDetailsData?.available_colors?.[0] ?? "",
   );
   const [selectedColor, setSelectedColor] = useState(
-    productDetailsData?.available_colors?.[0] ?? ""
+    productDetailsData?.available_colors?.[0] ?? "",
   );
   const [quantity, setQuantity] = useState(1);
 
@@ -54,7 +55,7 @@ export function ProductDetails() {
           quantity: quantity,
           color: selectedColor,
           size: selectedSize,
-        }
+        },
       );
     } else {
       navigate("/login");
@@ -140,6 +141,7 @@ export function ProductDetails() {
 
           {/* Add to Cart Button */}
           <Button
+            disabled={isPending}
             className="mb-[56px] w-full bg-[#ff4500] py-3 text-base font-medium text-white hover:bg-[#e63e00]"
             size="lg"
             onClick={handleAddToCart}
@@ -147,7 +149,14 @@ export function ProductDetails() {
             <ShoppingCart className="mr-2 h-5 w-5" />
             Add to cart
           </Button>
-
+          {isError && (
+            <div className="mt-4">
+              <AlertDestructive
+                alertTitle={error.message}
+                alertDescription="Couldn`t add to cart. Please try again."
+              />
+            </div>
+          )}
           {/* Product Details */}
           <div className="border-border space-y-4 border-t pt-14">
             <div className="flex flex-row items-center justify-between">

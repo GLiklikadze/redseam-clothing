@@ -7,6 +7,7 @@ import { useLogin } from "@/react-query/mutation/auth/authMutation";
 import { useNavigate } from "react-router-dom";
 import { LoginFormSchema } from "@/pages/login-page/components/schema";
 import { LoginFormValues } from "@/pages/login-page/components/types";
+import { AlertDestructive } from "@/components/error/errorAlert";
 
 const initialLoginObj = {
   email: "",
@@ -24,10 +25,8 @@ const LoginPage = () => {
     resolver: zodResolver(LoginFormSchema),
     mode: "onBlur",
   });
-  const { mutate } = useLogin();
-
+  const { mutate, isError, error, isPending } = useLogin();
   const onSubmit = (fieldValues: LoginFormValues) => {
-    console.log(fieldValues);
     mutate(fieldValues);
   };
 
@@ -93,12 +92,21 @@ const LoginPage = () => {
             )}
           </div>
           <Button
+            disabled={isPending}
             type="submit"
             className="h-[41px] w-full bg-[#FF4000] text-sm font-normal text-[#FFFFFF]"
             onClick={handleSubmit(onSubmit)}
           >
             Log in
           </Button>
+          {isError && (
+            <div className="mt-4">
+              <AlertDestructive
+                alertTitle={error.message}
+                alertDescription="Please enter valid credentials."
+              />
+            </div>
+          )}
           <p className="mx-auto text-sm font-normal">
             Not a member?{" "}
             <span

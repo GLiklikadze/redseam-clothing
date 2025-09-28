@@ -7,7 +7,7 @@ export const useGetList = (
   page: number,
   priceFrom: string | undefined,
   priceTo: string | undefined,
-  sortBy: SortOption
+  sortBy: SortOption,
 ) => {
   return useQuery({
     queryKey: ["get-list", page, priceFrom, priceTo, sortBy],

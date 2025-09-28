@@ -33,7 +33,7 @@ export const addToCart = async ({
         color: color,
         quantity: quantity,
         size: size,
-      }
+      },
     );
     if (status !== 200 && status !== 201) {
       throw new Error(`HTTP error! status: ${status} ${statusText}`);
