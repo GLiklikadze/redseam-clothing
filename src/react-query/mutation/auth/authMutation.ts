@@ -13,11 +13,15 @@ export const useRegister = () => {
     },
   });
 };
+
 export const useLogin = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationKey: ["login"],
     mutationFn: login,
-    onSuccess: () => navigate("/"),
-  });
+    onSuccess: (data) =>{
+    localStorage.setItem("user", JSON.stringify(data.user));
+    navigate("/");
+    },
+});
 };

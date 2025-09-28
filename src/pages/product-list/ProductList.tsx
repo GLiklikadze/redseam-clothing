@@ -54,7 +54,7 @@ const ProductList = () => {
     currentPage,
     filters?.priceFrom,
     filters?.priceTo,
-    sortBy,
+    sortBy
   );
   const { control, handleSubmit } = useForm<FilterAndSortOptions>({
     defaultValues: initialOptionsObj,
@@ -78,45 +78,51 @@ const ProductList = () => {
 
   const totalPages = productListResponse?.meta?.last_page || 1;
 
-  const getPageNumbers = () => {
-    const pages = [];
-    const maxVisiblePages = 4;
+ const getPageNumbers = () => {
+  const pages: (number | "ellipsis")[] = [];
 
-    if (totalPages <= maxVisiblePages) {
-      // Show all pages if total is less than max visible
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      // Show pages with ellipsis logic
-      if (currentPage <= 3) {
-        // Show first pages
-        for (let i = 1; i <= 4; i++) {
-          pages.push(i);
-        }
-        pages.push("ellipsis");
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        // Show last pages
-        pages.push(1);
-        pages.push("ellipsis");
-        for (let i = totalPages - 3; i <= totalPages; i++) {
-          pages.push(i);
-        }
-      } else {
-        // Show middle pages
-        pages.push(1);
-        pages.push("ellipsis");
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pages.push(i);
-        }
-        pages.push("ellipsis");
-        pages.push(totalPages);
+  const addPage = (page: number) => {
+    if (!pages.includes(page) && page >= 1 && page <= totalPages) {
+      pages.push(page);
+    }
+  };
+
+  // Always show first two
+  addPage(1);
+  addPage(2);
+
+  // Previous, current, next
+  addPage(currentPage - 1);
+  addPage(currentPage);
+  addPage(currentPage + 1);
+
+  // Always show last two
+  addPage(totalPages - 1);
+  addPage(totalPages);
+
+  // Sort pages
+  pages.sort((a, b) => (a === "ellipsis" || b === "ellipsis" ? 0 : a - b));
+
+  // Insert ellipses
+  const finalPages: (number | "ellipsis")[] = [];
+  for (let i = 0; i < pages.length; i++) {
+    if (i === 0) {
+      finalPages.push(pages[i]);
+      continue;
+    }
+
+    if (typeof pages[i] === "number" && typeof pages[i - 1] === "number") {
+      if ((pages[i] as number) - (pages[i - 1] as number) > 1) {
+        finalPages.push("ellipsis");
       }
     }
 
-    return pages;
-  };
+    finalPages.push(pages[i]);
+  }
+
+  return finalPages;
+};
+
   const handlePreviousPage = (e: React.MouseEvent) => {
     e.preventDefault();
     const newPage = currentPage - 1 > 0 ? currentPage - 1 : 1;
@@ -303,7 +309,7 @@ const ProductList = () => {
       </div>
       <Pagination className="mt-[90px] mb-[256px] flex flex-row">
         <PaginationContent>
-          <PaginationPrevious onClick={(e) => handlePreviousPage(e)} />
+          <PaginationPrevious onClick={(e) => handlePreviousPage(e)} className="hover:bg-[#FF4000] cursor-pointer"/>
 
           {getPageNumbers().map((page, index) => (
             <PaginationItem key={index}>
@@ -327,7 +333,7 @@ const ProductList = () => {
                     setSearchParams(params);
                   }}
                   isActive={currentPage === page}
-                  className="cursor-pointer"
+                  className={`${currentPage === page ? "text-[#FF4000] border-[#FF4000] ":"hover:bg-[#FF4000]"} cursor-pointer`}
                 >
                   {page}
                 </PaginationLink>
@@ -336,7 +342,7 @@ const ProductList = () => {
           ))}
 
           <PaginationItem>
-            <PaginationNext onClick={(e) => handleNextPage(e)} />
+            <PaginationNext onClick={(e) => handleNextPage(e)} className="hover:bg-[#FF4000] cursor-pointer"/>
           </PaginationItem>
         </PaginationContent>
       </Pagination>

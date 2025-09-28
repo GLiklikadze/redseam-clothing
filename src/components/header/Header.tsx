@@ -3,12 +3,14 @@ import logo from "../../assets/HandEye.svg";
 import arrow from "../../assets/chevron-down.svg";
 import { useNavigate } from "react-router-dom";
 import user_logo from "../../assets/user.svg";
+import user_avatar from "../../assets/register-user-img.png";
 const Header = () => {
   const navigate = useNavigate();
   const onLogoClick = () => {
     navigate("/");
   };
   const auth_token = localStorage.getItem("auth_token");
+  const saved_avatar = JSON.parse(localStorage.getItem("user") || "").avatar;
   return (
     <div className="flex h-[6.25rem] items-center justify-between bg-gray-100 px-[100px]">
       <div
@@ -20,14 +22,14 @@ const Header = () => {
       </div>
       <div className="flex items-center justify-center gap-[20px]">
         <CartSheet />
-        <div className="flex items-center justify-center ">
+        <div className="flex items-center justify-center">
           {auth_token ? (
-            <div className="h-10 w-10 flex flex-row items-center gap-[10px]">
+            <div className="flex h-10 w-10 flex-row items-center gap-[10px]">
               <img
                 src={
-                  localStorage.getItem("user")
-                    ? JSON.parse(localStorage.getItem("user") || "").avatar
-                    : ""
+                saved_avatar
+                    ? saved_avatar
+                    : user_avatar
                 }
                 alt="user-avatar"
                 className="h-full w-full cursor-pointer rounded-full object-cover"

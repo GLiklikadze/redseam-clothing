@@ -73,7 +73,7 @@ const CartSheet = () => {
                 navigate("/checkout");
                 setOpenSheet(false);
               }}
-              className="mx-auto h-[58px] w-[460px] mb-10 bg-[#FF4000] text-[#FFFFFF] hover:bg-orange-600"
+              className="mx-auto mb-10 h-[58px] w-[460px] bg-[#FF4000] text-[#FFFFFF] hover:bg-orange-600"
             >
               Go to checkout
             </Button>

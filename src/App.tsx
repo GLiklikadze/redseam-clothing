@@ -5,7 +5,7 @@ import RootLayout from "./components/layout/RootLayout";
 
 const ProductList = lazy(() => import("./pages/product-list/ProductList"));
 const ProductDetails = lazy(
-  () => import("@/pages/product-details/ProductDetails"),
+  () => import("@/pages/product-details/ProductDetails")
 );
 const RegisterPage = lazy(() => import("@/pages/register-page/RegisterPage"));
 const LoginPage = lazy(() => import("@/pages/login-page/LoginPage"));

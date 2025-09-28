@@ -63,14 +63,14 @@ const CheckoutPage = () => {
     setOpenModal(true);
   };
   return (
-    <div className="flex flex-col mt-[72px] px-[100px]">
+    <div className="mt-[72px] flex flex-col px-[100px]">
       <h1 className="mb-8 text-[42px] font-semibold">Checkout</h1>
       <div className="flex flex-row gap-[130px]">
-        <div className="w-[1130px] h-[635px] px-[47px] pt-[72px] bg-[#F8F6F7] text-[#3E424A] rounded-2xl">
-          <h2 className="text-[22px] font-medium ">Order details</h2>
+        <div className="h-[635px] w-[1130px] rounded-2xl bg-[#F8F6F7] px-[47px] pt-[72px] text-[#3E424A]">
+          <h2 className="text-[22px] font-medium">Order details</h2>
           <div className="flex flex-col gap-[33px]">
             <div>
-              <div className="flex flex-row gap-6 mt-[46px]">
+              <div className="mt-[46px] flex flex-row gap-6">
                 <Controller
                   name="name"
                   control={control}
@@ -80,7 +80,7 @@ const CheckoutPage = () => {
                         id="name"
                         type="text"
                         value={value}
-                        className={`${errors.name && "border-red-500"} w-[277px] h-[42px] bg-[#FFFFFF]`}
+                        className={`${errors.name && "border-red-500"} h-[42px] w-[277px] bg-[#FFFFFF]`}
                         onChange={onChange}
                         placeholder="Name"
                         onBlur={onBlur}
@@ -97,7 +97,7 @@ const CheckoutPage = () => {
                         id="surname"
                         type="text"
                         value={value}
-                        className={`${errors.surname && "border-red-500"} w-[277px] h-[42px] bg-[#FFFFFF]`}
+                        className={`${errors.surname && "border-red-500"} h-[42px] w-[277px] bg-[#FFFFFF]`}
                         onChange={onChange}
                         placeholder="Surname"
                         onBlur={onBlur}
@@ -108,7 +108,7 @@ const CheckoutPage = () => {
               </div>
             </div>
             <div className="relative">
-              <MailIcon className="h-5 w-5 absolute left-2.5 top-1/2 transform -translate-y-1/2 text-[#3E424A]" />
+              <MailIcon className="absolute top-1/2 left-2.5 h-5 w-5 -translate-y-1/2 transform text-[#3E424A]" />
               <Controller
                 name="email"
                 control={control}
@@ -118,7 +118,7 @@ const CheckoutPage = () => {
                       id="email"
                       type="email"
                       value={value}
-                      className={`${errors.email && "border-red-500"} w-[578px] h-[42px] pl-9 bg-[#FFFFFF]`}
+                      className={`${errors.email && "border-red-500"} h-[42px] w-[578px] bg-[#FFFFFF] pl-9`}
                       onChange={onChange}
                       placeholder="      Email *"
                       onBlur={onBlur}
@@ -137,7 +137,7 @@ const CheckoutPage = () => {
                       id="address"
                       type="text"
                       value={value}
-                      className={`${errors.address && "border-red-500"} w-[277px] h-[42px] bg-[#FFFFFF]`}
+                      className={`${errors.address && "border-red-500"} h-[42px] w-[277px] bg-[#FFFFFF]`}
                       onChange={onChange}
                       placeholder="Address"
                       onBlur={onBlur}
@@ -154,7 +154,7 @@ const CheckoutPage = () => {
                       id="zip_code"
                       type="text"
                       value={value}
-                      className={`${errors.zip_code && "border-red-500"} w-[277px] h-[42px] bg-[#FFFFFF]`}
+                      className={`${errors.zip_code && "border-red-500"} h-[42px] w-[277px] bg-[#FFFFFF]`}
                       onChange={onChange}
                       placeholder="Zipcode"
                       onBlur={onBlur}

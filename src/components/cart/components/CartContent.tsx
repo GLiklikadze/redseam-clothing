@@ -22,7 +22,7 @@ const CartContent: React.FC<PropsWithChildren> = ({ children }) => {
     product: string,
     changedQuantity: string | number,
     color: string,
-    size: string,
+    size: string
   ) => {
     mutateChangeQuantity({
       product,
@@ -34,7 +34,7 @@ const CartContent: React.FC<PropsWithChildren> = ({ children }) => {
   const handleDeleteCartItem = (
     product: number,
     color: string,
-    size: string,
+    size: string
   ) => {
     mutateDeleteCartItem({ product, color, size });
   };
@@ -76,7 +76,7 @@ const CartContent: React.FC<PropsWithChildren> = ({ children }) => {
                           String(product?.id),
                           product?.quantity - 1,
                           product?.color,
-                          product?.size,
+                          product?.size
                         )
                       }
                     >
@@ -98,7 +98,7 @@ const CartContent: React.FC<PropsWithChildren> = ({ children }) => {
                           String(product?.id),
                           product?.quantity + 1,
                           product?.color,
-                          product?.size,
+                          product?.size
                         )
                       }
                     >
@@ -121,7 +121,7 @@ const CartContent: React.FC<PropsWithChildren> = ({ children }) => {
                       handleDeleteCartItem(
                         product?.id,
                         product?.color,
-                        product?.size,
+                        product?.size
                       )
                     }
                     className="cursor-pointer pb-1 text-xs font-normal text-[#3E424A]"

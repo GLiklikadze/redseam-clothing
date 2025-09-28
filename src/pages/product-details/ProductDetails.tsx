@@ -6,19 +6,20 @@ import { useAddToCart } from "@/react-query/mutation/productDetails/productDetai
 import { useGetProductDetails } from "@/react-query/query/productDetails/productDetailsQuery";
 import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function ProductDetails() {
   const { products_id } = useParams();
   const { data: productDetailsData } = useGetProductDetails(products_id ?? "");
+  const navigate = useNavigate();
 
   const { mutate: mutateAddToCart } = useAddToCart();
 
   const [selectedSize, setSelectedSize] = useState(
-    productDetailsData?.available_colors?.[0] ?? "",
+    productDetailsData?.available_colors?.[0] ?? ""
   );
   const [selectedColor, setSelectedColor] = useState(
-    productDetailsData?.available_colors?.[0] ?? "",
+    productDetailsData?.available_colors?.[0] ?? ""
   );
   const [quantity, setQuantity] = useState(1);
 
@@ -37,21 +38,28 @@ export function ProductDetails() {
       setSelectedSize(productDetailsData.available_sizes?.[0] ?? "");
     }
   }, [productDetailsData]);
+  
+const token = localStorage.getItem("auth_token");
   const handleAddToCart = () => {
-    mutateAddToCart({
-      product: productDetailsData?.id,
-      quantity: quantity,
-      color: selectedColor,
-      size: selectedSize,
-    });
-    console.log(
-      { product: productDetailsData?.id },
-      {
+    if(token){
+      mutateAddToCart({
+        product: productDetailsData?.id,
         quantity: quantity,
         color: selectedColor,
         size: selectedSize,
-      },
-    );
+      });
+      console.log(
+        { product: productDetailsData?.id },
+        {
+          quantity: quantity,
+          color: selectedColor,
+          size: selectedSize,
+        }
+      );
+    
+    }else{
+    (navigate("/login"))
+    }
   };
   console.log("data", productDetailsData);
   return (
