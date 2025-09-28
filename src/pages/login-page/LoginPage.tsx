@@ -1,4 +1,4 @@
-import register_image from "../../assets/register-image.png";
+import register_image from "../../assets/register-image.webp";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
