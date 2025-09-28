@@ -1,7 +1,8 @@
 {
+  "version": 3,
   "rewrites": [
     {
-      "source": "/((?!assets/|data/|.*\\.json).*)",
+      "source": "/((?!assets/|.*\\.js|.*\\.css|.*\\.png|.*\\.webp|.*\\.svg|.*\\.json).*)",
       "destination": "/index.html"
     }
   ]
