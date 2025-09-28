@@ -257,6 +257,7 @@ const ProductList = () => {
                   priceTo: filters.priceTo ?? "",
                 },
                 setSearchParams,
+                sortBy,
               )
             }
             className="cursor-pointer hover:bg-[#FF4000]"

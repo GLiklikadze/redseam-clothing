@@ -80,6 +80,7 @@ export const handlePreviousPage = (
   totalPages: number,
   filters: FilterAndSortOptions | undefined,
   setSearchParams: (params: Record<string, string>) => void,
+  sortBy: string,
 ) => {
   e.preventDefault();
   const newPage = currentPage - 1 > 0 ? currentPage - 1 : 1;
@@ -92,6 +93,9 @@ export const handlePreviousPage = (
   }
   if (filters?.priceTo) {
     params.priceTo = filters.priceTo;
+  }
+  if (sortBy) {
+    params.sort = sortBy;
   }
   setSearchParams(params);
 };
