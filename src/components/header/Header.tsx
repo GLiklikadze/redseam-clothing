@@ -4,6 +4,7 @@ import arrow from "../../assets/chevron-down.svg";
 import { useNavigate } from "react-router-dom";
 import user_logo from "../../assets/user.svg";
 import user_avatar from "../../assets/register-user-img.png";
+import ProfileDropdown from "@/components/header/components/profileDropdown";
 const Header = () => {
   const navigate = useNavigate();
   const onLogoClick = () => {
@@ -26,18 +27,20 @@ const Header = () => {
         <CartSheet />
         <div className="flex items-center justify-center">
           {auth_token ? (
-            <div className="flex h-10 w-10 flex-row items-center gap-[10px]">
-              <img
-                src={saved_avatar ? saved_avatar : user_avatar}
-                alt="user-avatar"
-                className="h-full w-full cursor-pointer rounded-full object-cover"
-              />
-              <img
-                src={arrow}
-                alt="arrow-logo"
-                className="h-6 w-6 cursor-pointer"
-              />
-            </div>
+            <ProfileDropdown>
+              <div className="flex h-10 w-10 flex-row items-center gap-[10px]">
+                <img
+                  src={saved_avatar ? saved_avatar : user_avatar}
+                  alt="user-avatar"
+                  className="h-full w-full cursor-pointer rounded-full object-cover"
+                />
+                <img
+                  src={arrow}
+                  alt="arrow-logo"
+                  className="h-6 w-6 cursor-pointer"
+                />
+              </div>
+            </ProfileDropdown>
           ) : (
             <div className="flex flex-row items-center gap-2">
               <img src={user_logo} alt="user-logo" className="h-5 w-5" />

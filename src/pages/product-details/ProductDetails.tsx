@@ -8,6 +8,7 @@ import { useGetProductDetails } from "@/react-query/query/productDetails/product
 import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 export function ProductDetails() {
   const { products_id } = useParams();
@@ -49,14 +50,8 @@ export function ProductDetails() {
         color: selectedColor,
         size: selectedSize,
       });
-      console.log(
-        { product: productDetailsData?.id },
-        {
-          quantity: quantity,
-          color: selectedColor,
-          size: selectedSize,
-        },
-      );
+      navigate("/products");
+      toast("Product has been added to cart");
     } else {
       navigate("/login");
     }

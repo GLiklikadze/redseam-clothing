@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { LoginFormSchema } from "@/pages/login-page/components/schema";
 import { LoginFormValues } from "@/pages/login-page/components/types";
 import { AlertDestructive } from "@/components/error/errorAlert";
+import { PasswordInput } from "@/components/ui/passwordInput";
 
 const initialLoginObj = {
   email: "",
@@ -73,9 +74,8 @@ const LoginPage = () => {
               control={control}
               render={({ field: { onChange, value, onBlur } }) => {
                 return (
-                  <Input
+                  <PasswordInput
                     id="password"
-                    type="password"
                     className={errors.password && "border-red-500"}
                     onChange={onChange}
                     value={value}

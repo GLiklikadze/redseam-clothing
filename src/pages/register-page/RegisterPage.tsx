@@ -10,6 +10,7 @@ import { useState } from "react";
 import { RegisterFormSchema } from "@/pages/register-page/components/schema";
 import { RegisterFormValues } from "@/pages/register-page/components/types";
 import { AlertDestructive } from "@/components/error/errorAlert";
+import { PasswordInput } from "@/components/ui/passwordInput";
 
 const initialRegisterObj = {
   userName: "",
@@ -151,9 +152,8 @@ const RegisterPage = () => {
               control={control}
               render={({ field: { onChange, value, onBlur } }) => {
                 return (
-                  <Input
+                  <PasswordInput
                     id="password"
-                    type="password"
                     className={errors.password && "border-red-500"}
                     onChange={onChange}
                     value={value}
@@ -176,9 +176,8 @@ const RegisterPage = () => {
               control={control}
               render={({ field: { onChange, value, onBlur } }) => {
                 return (
-                  <Input
+                  <PasswordInput
                     id="confirmPassword"
-                    type="password"
                     className={errors.password && "border-red-500"}
                     onChange={onChange}
                     value={value}
